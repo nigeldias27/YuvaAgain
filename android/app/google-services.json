@@ -1,0 +1,164 @@
+{
+  "project_info": {
+    "project_number": "27568309259",
+    "firebase_url": "https://dice2-1f790.firebaseio.com",
+    "project_id": "dice2-1f790",
+    "storage_bucket": "dice2-1f790.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27568309259:android:abb5790b134e553b",
+        "android_client_info": {
+          "package_name": "com.exam.and.dice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27568309259-3nak6aki2609c6759a2kv0rrel2lv2ml.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.exam.and.dice",
+            "certificate_hash": "d20dc575c07ef905b38a13001e50be2c0f1b0a13"
+          }
+        },
+        {
+          "client_id": "27568309259-be404sf748saq2l695qlc912q88ivro9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHSG-qYiwwhwdTWxHInFV8p8f8BATc-sk"
+        },
+        {
+          "current_key": "AIzaSyBifngEG90wckQ0DrrHDCmlnEF4ytY5XQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27568309259-be404sf748saq2l695qlc912q88ivro9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-9582663871920890~8191710568"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27568309259:android:875826f41b75eba4",
+        "android_client_info": {
+          "package_name": "com.example.android.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27568309259-i4fbstinqnfiq9dbmd0bvl5i18lirm12.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.myapplication",
+            "certificate_hash": "d20dc575c07ef905b38a13001e50be2c0f1b0a13"
+          }
+        },
+        {
+          "client_id": "27568309259-be404sf748saq2l695qlc912q88ivro9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHSG-qYiwwhwdTWxHInFV8p8f8BATc-sk"
+        },
+        {
+          "current_key": "AIzaSyBifngEG90wckQ0DrrHDCmlnEF4ytY5XQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27568309259-be404sf748saq2l695qlc912q88ivro9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27568309259:android:cea6bb150cc697b69bf30e",
+        "android_client_info": {
+          "package_name": "com.example.yuva_again"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27568309259-be404sf748saq2l695qlc912q88ivro9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHSG-qYiwwhwdTWxHInFV8p8f8BATc-sk"
+        },
+        {
+          "current_key": "AIzaSyBifngEG90wckQ0DrrHDCmlnEF4ytY5XQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27568309259-be404sf748saq2l695qlc912q88ivro9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27568309259:android:e92448430c6f784b",
+        "android_client_info": {
+          "package_name": "com.xample.nigeldias.calculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27568309259-ph3v5ogu8n4727bep40qkev5snav6hjp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xample.nigeldias.calculator",
+            "certificate_hash": "f56c0c300c813634f47acdc40678fd14b5c9e14f"
+          }
+        },
+        {
+          "client_id": "27568309259-be404sf748saq2l695qlc912q88ivro9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHSG-qYiwwhwdTWxHInFV8p8f8BATc-sk"
+        },
+        {
+          "current_key": "AIzaSyBifngEG90wckQ0DrrHDCmlnEF4ytY5XQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27568309259-be404sf748saq2l695qlc912q88ivro9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

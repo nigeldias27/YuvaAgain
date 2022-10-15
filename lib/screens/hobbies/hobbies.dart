@@ -1,8 +1,11 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuva_again/screens/hobbies/events.dart';
 import 'package:yuva_again/screens/hobbies/notifications.dart';
+
+import '../../services/treeIncrementor.dart';
 
 class Hobbies extends StatefulWidget {
   const Hobbies({Key? key}) : super(key: key);
@@ -30,6 +33,7 @@ class _HobbiesState extends State<Hobbies> {
           unselectedItemColor: Colors.black,
           currentIndex: bottom_nav_index,
           onTap: (int index) {
+            treeincrement(FirebaseAuth.instance!.currentUser!.uid);
             setState(() {
               bottom_nav_index = index;
             });

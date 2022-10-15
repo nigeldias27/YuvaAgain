@@ -111,7 +111,7 @@ class _HomeState extends State<Home> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 32.0, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(10, 32.0, 10, 0),
                   child: Text(
                     greetings,
                     style: GoogleFonts.montserrat(
@@ -235,7 +235,7 @@ class _HomeState extends State<Home> {
               ],
             ),
             Container(
-              height: MediaQuery.of(context).size.height - 156,
+              height: MediaQuery.of(context).size.height - 200,
               child: loadingtreeScore
                   ? Center(child: CircularProgressIndicator())
                   : Rive(

@@ -97,8 +97,7 @@ class _NotificationsState extends State<Notifications> {
                           Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Text(
-                              "Description: " +
-                                  allnotifications[index]['description'],
+                              allnotifications[index]['description'],
                               style: GoogleFonts.montserrat(),
                             ),
                           ),

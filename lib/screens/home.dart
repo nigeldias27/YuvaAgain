@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,8 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rive/rive.dart';
+import 'package:text_to_speech/text_to_speech.dart';
+import 'package:yuva_again/screens/games/games.dart';
+import 'package:yuva_again/screens/hobbies/hobbies.dart';
 import 'package:yuva_again/screens/voiceChannels/voiceChannels.dart';
 import 'package:yuva_again/services/treeHeight.dart';
+
+import '../services/treeIncrementor.dart';
 
 class Home extends StatefulWidget {
   final username;
@@ -84,6 +91,19 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            TextToSpeech tts = TextToSpeech();
+            tts.speak(greetings);
+            sleep(Duration(seconds: 1));
+            tts.speak(" Voice Channels, Hobbies and Games");
+          },
+          backgroundColor: Colors.orangeAccent,
+          child: Icon(
+            Icons.speaker_group,
+            color: Colors.black,
+          ),
+        ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -107,13 +127,15 @@ class _HomeState extends State<Home> {
                       Padding(
                         padding: const EdgeInsets.all(3.0),
                         child: InkWell(
+                          borderRadius: BorderRadius.circular(20),
                           onTap: () {
+                            treeincrement(_auth!.currentUser!.uid);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (builder) => VoiceChannels()));
                           },
-                          child: Container(
+                          child: Ink(
                             width: 150,
                             decoration: BoxDecoration(
                                 color: Colors.orangeAccent,
@@ -139,50 +161,70 @@ class _HomeState extends State<Home> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(3.0),
-                        child: Container(
-                          width: 100,
-                          decoration: BoxDecoration(
-                              color: Colors.orangeAccent,
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Hobbies',
-                                  style: GoogleFonts.montserrat(
-                                      color: Colors.black),
-                                ),
-                                Icon(
-                                  Icons.calendar_today,
-                                  color: Colors.black,
-                                )
-                              ],
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(20),
+                          onTap: () {
+                            treeincrement(_auth!.currentUser!.uid);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => Hobbies()));
+                          },
+                          child: Ink(
+                            width: 100,
+                            decoration: BoxDecoration(
+                                color: Colors.orangeAccent,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Hobbies',
+                                    style: GoogleFonts.montserrat(
+                                        color: Colors.black),
+                                  ),
+                                  Icon(
+                                    Icons.calendar_today,
+                                    color: Colors.black,
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(3.0),
-                        child: Container(
-                          width: 100,
-                          decoration: BoxDecoration(
-                              color: Colors.orangeAccent,
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Games',
-                                  style: GoogleFonts.montserrat(
-                                      color: Colors.black),
-                                ),
-                                Icon(
-                                  Icons.gamepad_outlined,
-                                  color: Colors.black,
-                                )
-                              ],
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(20),
+                          onTap: () {
+                            treeincrement(_auth!.currentUser!.uid);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => Games()));
+                          },
+                          child: Ink(
+                            width: 100,
+                            decoration: BoxDecoration(
+                                color: Colors.orangeAccent,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Games',
+                                    style: GoogleFonts.montserrat(
+                                        color: Colors.black),
+                                  ),
+                                  Icon(
+                                    Icons.gamepad_outlined,
+                                    color: Colors.black,
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),

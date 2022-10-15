@@ -41,7 +41,8 @@ class _VoiceChannelsState extends State<VoiceChannels> {
         children: [
           Container(
             decoration: BoxDecoration(
-                color: Colors.orangeAccent,
+                gradient: LinearGradient(
+                    colors: [Colors.orangeAccent, Colors.orange.shade200]),
                 borderRadius:
                     BorderRadius.vertical(bottom: Radius.circular(50))),
             child: Column(

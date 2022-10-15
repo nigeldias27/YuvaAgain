@@ -1,11 +1,13 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:yuva_again/screens/registration/personalInfo.dart';
 
+import '../home.dart';
 import 'init.dart';
 
 enum ScreenState { MOBILE_NO_STATE, OTP_STATE }
@@ -42,8 +44,17 @@ class _AuthenticateState extends State<Authenticate> {
       setState(() {
         showLoading = false;
       });
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => PersonalInfo()));
+      String? uid = _auth.currentUser!.uid;
+      final snapshot = await FirebaseDatabase.instance.ref('users/$uid').get();
+      if (snapshot.exists) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Home()));
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => PersonalInfo()));
+      }
+      //  Navigator.pushReplacement(
+      //      context, MaterialPageRoute(builder: (context) => PersonalInfo()));
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.message!)));

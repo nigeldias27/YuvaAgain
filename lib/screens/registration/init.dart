@@ -1,10 +1,12 @@
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yuva_again/screens/registration/personalInfo.dart';
 
 import '../home.dart';
 import 'auth.dart';
@@ -48,10 +50,19 @@ class _InitializerWidgetState extends State<InitializerWidget> {
     //    });}
     print(_user?.uid);
     if (_user?.uid != null) {
-      SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Home()));
-      });
+      String? uid = _user?.uid;
+      final snapshot = await FirebaseDatabase.instance.ref('users/$uid').get();
+      if (snapshot.exists) {
+        SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Home()));
+        });
+      } else {
+        SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => PersonalInfo()));
+        });
+      }
     }
 
     setState(() {

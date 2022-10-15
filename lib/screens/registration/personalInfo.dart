@@ -4,7 +4,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:location/location.dart';
 import 'package:yuva_again/screens/home.dart';
+import 'package:yuva_again/services/getChannels.dart';
 
 class PersonalInfo extends StatefulWidget {
   const PersonalInfo({Key? key}) : super(key: key);
@@ -20,18 +22,29 @@ class _PersonalInfoState extends State<PersonalInfo> {
   late SingleValueDropDownController _cnt = SingleValueDropDownController();
   late MultiValueDropDownController _cntMult = MultiValueDropDownController();
   late MultiValueDropDownController _cntMulti = MultiValueDropDownController();
-  List<DropDownValueModel> current_interests =
-      ['Knitting', 'Playing Bingo', 'Reading', 'Cooking']
-          .map(
-            (e) => DropDownValueModel(name: e, value: e),
-          )
-          .toList();
+  List<DropDownValueModel> current_interests = [];
 
   @override
   void initState() {
     super.initState();
     _auth = FirebaseAuth.instance;
+
+    init_wrapper();
     // _user = _auth!.currentUser;
+  }
+
+  init_wrapper() async {
+    print("this is running");
+    print(await getsChannels());
+    List channels = await getsChannels();
+    List<DropDownValueModel> allchannels = channels
+        .map(
+          (e) => DropDownValueModel(name: e, value: e),
+        )
+        .toList();
+    setState(() {
+      current_interests = allchannels;
+    });
   }
 
   @override
@@ -276,9 +289,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
   }
 
   personal_added() async {
+    var loc = await Location().getLocation();
     print(_auth?.currentUser);
     DatabaseReference ref =
         FirebaseDatabase.instance.ref('users/' + _auth!.currentUser!.uid);
+    String latlong = loc.latitude.toString() + ',' + loc.longitude.toString();
     await ref.set({
       "Name": name.text,
       "Age": age.text,
@@ -286,8 +301,27 @@ class _PersonalInfoState extends State<PersonalInfo> {
       "Current Interests":
           _cntMult.dropDownValueList!.map((e) => e.name).toList().toString(),
       "Future Interests":
-          _cntMulti.dropDownValueList!.map((e) => e.name).toList().toString()
+          _cntMulti.dropDownValueList!.map((e) => e.name).toList().toString(),
+      'location': latlong
     });
+    List currentinterest =
+        _cntMult.dropDownValueList!.map((e) => e.name).toList();
+    List futureinterest =
+        _cntMulti.dropDownValueList!.map((e) => e.name).toList();
+
+    for (int i = 0; i < currentinterest.length; i++) {
+      String nameofchannel = currentinterest[i];
+      FirebaseDatabase.instance
+          .ref('channels/$nameofchannel')
+          .update({_auth!.currentUser!.uid: 'Current Interests'});
+    }
+
+    for (int i = 0; i < futureinterest.length; i++) {
+      String nameofchannel = futureinterest[i];
+      FirebaseDatabase.instance
+          .ref('channels/$nameofchannel')
+          .update({_auth!.currentUser!.uid: 'Future Interests'});
+    }
     Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
   }
 }

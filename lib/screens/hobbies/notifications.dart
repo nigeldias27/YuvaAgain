@@ -65,8 +65,7 @@ class _NotificationsState extends State<Notifications> {
             ],
           ),
         ),
-        Container(
-          height: MediaQuery.of(context).size.height - 260,
+        Expanded(
           child: ListView.builder(
               physics: BouncingScrollPhysics(),
               itemCount: allnotifications.length,

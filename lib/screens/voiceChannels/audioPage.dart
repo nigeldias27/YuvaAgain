@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,8 +14,7 @@ class Audio extends StatefulWidget {
 
 class _AudioState extends State<Audio> {
   String channelName = "Knitting";
-  String token =
-      "007eJxTYLA8E2rDy5Qae316zOyE69lWP5uahU/JeRV9K2DzmmF0yF+BwTQ1zTLJxCLZyMjYwiTJ0CQpzSQtMTk52TLFyNQgKdmgYbJ3ckMgI8PVmVFMjAwQCOJzMHjnZZaUZOalMzAAAFXEH/s=";
+  String token = "";
   static const appId = "5ef9b48c22384b14bf4faccc9d250bc0";
   int uid = 0; // uid of the local user
   bool mute = false;
@@ -24,6 +25,15 @@ class _AudioState extends State<Audio> {
   void initState() {
     super.initState();
     // Set up an instance of Agora engine
+    init_wrapper();
+  }
+
+  init_wrapper() async {
+    final snapshot = await FirebaseDatabase.instance.ref('token').get();
+    var data = Map<String, dynamic>.from(snapshot.value as dynamic);
+    setState(() {
+      token = data['Knitting'];
+    });
     setupVoiceSDKEngine();
   }
 
@@ -78,140 +88,144 @@ class _AudioState extends State<Audio> {
           backgroundColor: Colors.orangeAccent,
           centerTitle: true,
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Status text
-            Container(height: 40, child: Center(child: _status())),
-            // Button Row
-            Padding(
-              padding: const EdgeInsets.only(top: 27.0),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextButton(
-                      style: ButtonStyle(
-                        overlayColor: MaterialStateColor.resolveWith(
-                            (states) => Colors.transparent),
-                      ),
-                      child: Container(
-                          decoration: BoxDecoration(
-                              color: _isJoined
-                                  ? Colors.orangeAccent
-                                  : Colors.grey.shade200,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.25),
-                                    blurRadius: 4,
-                                    offset: const Offset(0, 4))
-                              ],
-                              borderRadius: BorderRadius.circular(50)),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 16.0, horizontal: 20),
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.add_call,
-                                  color: Colors.black,
-                                ),
-                                Text(
-                                  "Join",
-                                  style: GoogleFonts.montserrat(
-                                      color: Colors.black),
-                                ),
-                              ],
+        body: token == ''
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Status text
+                  Container(height: 40, child: Center(child: _status())),
+                  // Button Row
+                  Padding(
+                    padding: const EdgeInsets.only(top: 27.0),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextButton(
+                            style: ButtonStyle(
+                              overlayColor: MaterialStateColor.resolveWith(
+                                  (states) => Colors.transparent),
                             ),
-                          )),
-                      onPressed: () => {join()},
-                    ),
-                  ),
-                  Expanded(
-                    child: TextButton(
-                      style: ButtonStyle(
-                        overlayColor: MaterialStateColor.resolveWith(
-                            (states) => Colors.transparent),
-                      ),
-                      child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.25),
-                                    blurRadius: 4,
-                                    offset: const Offset(0, 4))
-                              ],
-                              borderRadius: BorderRadius.circular(100)),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 16.0, horizontal: 20),
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.call_end,
-                                  color: Colors.white,
-                                ),
-                                Text(
-                                  "Leave",
-                                  style: GoogleFonts.montserrat(
-                                      color: Colors.white),
-                                ),
-                              ],
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    color: _isJoined
+                                        ? Colors.orangeAccent
+                                        : Colors.grey.shade200,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.black.withOpacity(0.25),
+                                          blurRadius: 4,
+                                          offset: const Offset(0, 4))
+                                    ],
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16.0, horizontal: 20),
+                                  child: Column(
+                                    children: [
+                                      Icon(
+                                        Icons.add_call,
+                                        color: Colors.black,
+                                      ),
+                                      Text(
+                                        "Join",
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                            onPressed: () => {join()},
+                          ),
+                        ),
+                        Expanded(
+                          child: TextButton(
+                            style: ButtonStyle(
+                              overlayColor: MaterialStateColor.resolveWith(
+                                  (states) => Colors.transparent),
                             ),
-                          )),
-                      onPressed: () => {leave()},
-                    ),
-                  ),
-                  Expanded(
-                    child: TextButton(
-                      style: ButtonStyle(
-                        overlayColor: MaterialStateColor.resolveWith(
-                            (states) => Colors.transparent),
-                      ),
-                      child: Container(
-                          decoration: BoxDecoration(
-                              color: mute
-                                  ? Colors.grey.shade400
-                                  : Colors.grey.shade200,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.25),
-                                    blurRadius: 4,
-                                    offset: const Offset(0, 4))
-                              ],
-                              borderRadius: BorderRadius.circular(50)),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 16.0, horizontal: 20),
-                            child: Column(
-                              children: [
-                                Icon(
-                                  mute
-                                      ? Icons.mic_rounded
-                                      : Icons.mic_off_rounded,
-                                  color: Colors.black,
-                                ),
-                                Text(
-                                  mute ? "Unmute" : "Mute",
-                                  style: GoogleFonts.montserrat(
-                                      color: Colors.black),
-                                ),
-                              ],
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.black.withOpacity(0.25),
+                                          blurRadius: 4,
+                                          offset: const Offset(0, 4))
+                                    ],
+                                    borderRadius: BorderRadius.circular(100)),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16.0, horizontal: 20),
+                                  child: Column(
+                                    children: [
+                                      Icon(
+                                        Icons.call_end,
+                                        color: Colors.white,
+                                      ),
+                                      Text(
+                                        "Leave",
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                            onPressed: () => {leave()},
+                          ),
+                        ),
+                        Expanded(
+                          child: TextButton(
+                            style: ButtonStyle(
+                              overlayColor: MaterialStateColor.resolveWith(
+                                  (states) => Colors.transparent),
                             ),
-                          )),
-                      onPressed: () => {
-                        setState(() {
-                          mute ? mute = false : mute = true;
-                          agoraEngine.muteLocalAudioStream(mute);
-                        })
-                      },
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    color: mute
+                                        ? Colors.grey.shade400
+                                        : Colors.grey.shade200,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.black.withOpacity(0.25),
+                                          blurRadius: 4,
+                                          offset: const Offset(0, 4))
+                                    ],
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16.0, horizontal: 20),
+                                  child: Column(
+                                    children: [
+                                      Icon(
+                                        mute
+                                            ? Icons.mic_rounded
+                                            : Icons.mic_off_rounded,
+                                        color: Colors.black,
+                                      ),
+                                      Text(
+                                        mute ? "Unmute" : "Mute",
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                            onPressed: () => {
+                              setState(() {
+                                mute ? mute = false : mute = true;
+                                agoraEngine.muteLocalAudioStream(mute);
+                              })
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
-              ),
-            ),
-          ],
-        ));
+              ));
   }
 
   void join() async {

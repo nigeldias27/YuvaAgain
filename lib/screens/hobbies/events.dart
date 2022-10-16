@@ -77,8 +77,7 @@ class _EventsState extends State<Events> {
           ),
         ),
         allEvents != []
-            ? Container(
-                height: MediaQuery.of(context).size.height - 291,
+            ? Expanded(
                 child: ListView.builder(
                     physics: BouncingScrollPhysics(),
                     itemCount: allEvents.length,

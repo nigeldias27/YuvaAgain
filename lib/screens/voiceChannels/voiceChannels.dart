@@ -85,8 +85,7 @@ class _VoiceChannelsState extends State<VoiceChannels> {
               style: GoogleFonts.montserrat(),
             ),
           ),
-          Container(
-            height: MediaQuery.of(context).size.height - 250,
+          Expanded(
             child: ListView.builder(
                 itemCount: yourchannels.length,
                 itemBuilder: (context, int index) {

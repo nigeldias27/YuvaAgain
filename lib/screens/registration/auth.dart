@@ -139,6 +139,7 @@ class _AuthenticateState extends State<Authenticate> {
                   showLoading = true;
                 });
                 await _auth.verifyPhoneNumber(
+                    timeout: const Duration(seconds: 120),
                     phoneNumber: countryCode + mob_no,
                     verificationCompleted: (phoneAuthCredential) async {
                       setState(() {
@@ -154,7 +155,7 @@ class _AuthenticateState extends State<Authenticate> {
 
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(verificationFailed.message!),
-                          duration: const Duration(minutes: 2)));
+                          duration: const Duration(seconds: 5)));
                     },
                     codeSent: (verificationId, resendingToken) async {
                       setState(() {

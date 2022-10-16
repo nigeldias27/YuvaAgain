@@ -101,6 +101,7 @@ class _HomeState extends State<Home> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(
             "Yuva Again",
             style: GoogleFonts.montserrat(
@@ -113,7 +114,7 @@ class _HomeState extends State<Home> {
           onPressed: () {
             TextToSpeech tts = TextToSpeech();
             tts.speak(greetings);
-            sleep(Duration(seconds: 1));
+            sleep(Duration(seconds: 3));
             tts.speak(" Voice Channels, Hobbies and Games");
           },
           backgroundColor: Colors.orangeAccent,
@@ -154,13 +155,13 @@ class _HomeState extends State<Home> {
                                     builder: (builder) => VoiceChannels()));
                           },
                           child: Ink(
-                            width: 150,
                             decoration: BoxDecoration(
                                 color: Colors.orangeAccent,
                                 borderRadius: BorderRadius.circular(20)),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
                                     'Voice Channels',
@@ -189,13 +190,13 @@ class _HomeState extends State<Home> {
                                     builder: (builder) => Hobbies()));
                           },
                           child: Ink(
-                            width: 100,
                             decoration: BoxDecoration(
                                 color: Colors.orangeAccent,
                                 borderRadius: BorderRadius.circular(20)),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
                                     'Hobbies',
@@ -224,13 +225,13 @@ class _HomeState extends State<Home> {
                                     builder: (builder) => Games()));
                           },
                           child: Ink(
-                            width: 100,
                             decoration: BoxDecoration(
                                 color: Colors.orangeAccent,
                                 borderRadius: BorderRadius.circular(20)),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
                                     'Games',
@@ -252,8 +253,7 @@ class _HomeState extends State<Home> {
                 ),
               ],
             ),
-            Container(
-              height: MediaQuery.of(context).size.height - 256,
+            Expanded(
               child: loadingtreeScore
                   ? Center(child: CircularProgressIndicator())
                   : Rive(

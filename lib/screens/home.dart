@@ -91,6 +91,15 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Yuva Again",
+            style: GoogleFonts.montserrat(
+                color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Colors.orangeAccent,
+          centerTitle: true,
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             TextToSpeech tts = TextToSpeech();
@@ -235,7 +244,7 @@ class _HomeState extends State<Home> {
               ],
             ),
             Container(
-              height: MediaQuery.of(context).size.height - 200,
+              height: MediaQuery.of(context).size.height - 256,
               child: loadingtreeScore
                   ? Center(child: CircularProgressIndicator())
                   : Rive(

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yuva_again/screens/voiceChannels/audioPage.dart';
 import 'package:yuva_again/screens/voiceChannels/callPage.dart';
 import 'package:yuva_again/services/treeIncrementor.dart';
 import 'package:yuva_again/services/yourChannels.dart';
@@ -133,7 +134,6 @@ class _VoiceChannelsState extends State<VoiceChannels> {
 
   channelClicked() {
     treeincrement(auth!.currentUser!.uid);
-    Navigator.push(
-        context, MaterialPageRoute(builder: (builder) => CallCard()));
+    Navigator.push(context, MaterialPageRoute(builder: (builder) => Audio()));
   }
 }

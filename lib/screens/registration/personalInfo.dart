@@ -28,7 +28,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   void initState() {
     super.initState();
     _auth = FirebaseAuth.instance;
-
+    //_auth!.signOut();
     init_wrapper();
     // _user = _auth!.currentUser;
   }

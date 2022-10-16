@@ -1,3 +1,4 @@
+/*
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,8 @@ class _CallCardState extends State<CallCard> {
     await _client.initialize();
   }
 
+ */
+/*
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,3 +53,4 @@ class _CallCardState extends State<CallCard> {
     );
   }
 }
+*/

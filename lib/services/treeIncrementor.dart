@@ -6,6 +6,6 @@ treeincrement(uid) async {
   if (snapshot.exists) {
     var data = Map<String, dynamic>.from(snapshot.value as dynamic);
     ref.update(
-        {"treeScore": data['treeScore'] != null ? data['treeScore'] + 1 : 1});
+        {"treeScore": data['treeScore'] != null ? data['treeScore'] + 5 : 5});
   }
 }

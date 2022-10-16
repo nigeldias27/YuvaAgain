@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,6 +28,7 @@ class _HomeState extends State<Home> {
   FirebaseAuth? _auth;
   String greetings = '';
   Artboard? riveartboard;
+  late StreamSubscription stream;
   StateMachineController? stateMachineController;
   SMIInput<double>? _progress;
   bool loadingtreeScore = true;
@@ -46,13 +48,21 @@ class _HomeState extends State<Home> {
       if (controller != null) {
         artboard.addController(controller);
         _progress = controller.findInput('input');
-        int treeScore = await treeHeight(_auth!.currentUser!.uid);
         setState(() {
           loadingtreeScore = false;
-          _progress?.value = treeScore.toDouble();
           riveartboard = artboard;
         });
       }
+    });
+    DatabaseReference ref =
+        FirebaseDatabase.instance.ref('users/' + _auth!.currentUser!.uid);
+    stream = ref.onValue.listen((event) {
+      var data = Map<String, dynamic>.from(event.snapshot.value as dynamic);
+      print(data);
+      int myscore = data['treeScore'] != null ? data['treeScore'] : 0;
+      setState(() {
+        _progress?.value = myscore.toDouble();
+      });
     });
   }
 
@@ -256,5 +266,12 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    stream.cancel();
+    super.deactivate();
   }
 }

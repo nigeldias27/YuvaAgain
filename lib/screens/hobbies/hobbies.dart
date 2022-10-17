@@ -27,8 +27,8 @@ class _HobbiesState extends State<Hobbies> {
     return SafeArea(
         child: Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-          selectedLabelStyle: GoogleFonts.montserrat(),
-          unselectedLabelStyle: GoogleFonts.montserrat(),
+          selectedLabelStyle: GoogleFonts.montserrat(fontSize: 18),
+          unselectedLabelStyle: GoogleFonts.montserrat(fontSize: 18),
           selectedItemColor: Colors.orangeAccent,
           unselectedItemColor: Colors.black,
           currentIndex: bottom_nav_index,

@@ -134,7 +134,7 @@ class _HomeState extends State<Home> {
                   child: Text(
                     greetings,
                     style: GoogleFonts.montserrat(
-                        fontSize: 36,
+                        fontSize: 40,
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
@@ -166,11 +166,11 @@ class _HomeState extends State<Home> {
                                   Text(
                                     'Voice Channels',
                                     style: GoogleFonts.montserrat(
-                                        color: Colors.black),
+                                        color: Colors.black, fontSize: 18),
                                   ),
-                                  Icon(
-                                    Icons.mic,
-                                    color: Colors.black,
+                                  Image.network(
+                                    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Google_Voice_icon_%282020%29.svg/2020px-Google_Voice_icon_%282020%29.svg.png",
+                                    width: 20,
                                   )
                                 ],
                               ),
@@ -201,11 +201,11 @@ class _HomeState extends State<Home> {
                                   Text(
                                     'Hobbies',
                                     style: GoogleFonts.montserrat(
-                                        color: Colors.black),
+                                        color: Colors.black, fontSize: 18),
                                   ),
-                                  Icon(
-                                    Icons.calendar_today,
-                                    color: Colors.black,
+                                  Image.network(
+                                    "https://cdn-icons-png.flaticon.com/512/3713/3713309.png",
+                                    width: 20,
                                   )
                                 ],
                               ),
@@ -236,11 +236,11 @@ class _HomeState extends State<Home> {
                                   Text(
                                     'Games',
                                     style: GoogleFonts.montserrat(
-                                        color: Colors.black),
+                                        color: Colors.black, fontSize: 18),
                                   ),
-                                  Icon(
-                                    Icons.gamepad_outlined,
-                                    color: Colors.black,
+                                  Image.network(
+                                    "https://cdn-icons-png.flaticon.com/512/2533/2533402.png",
+                                    width: 20,
                                   )
                                 ],
                               ),

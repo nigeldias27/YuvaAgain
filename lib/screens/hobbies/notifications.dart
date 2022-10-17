@@ -56,7 +56,7 @@ class _NotificationsState extends State<Notifications> {
                   child: Text(
                     "Notifications",
                     style: GoogleFonts.montserrat(
-                        fontSize: 36,
+                        fontSize: 40,
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
@@ -91,13 +91,13 @@ class _NotificationsState extends State<Notifications> {
                           Text(
                             allnotifications[index]['name'],
                             style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.bold, fontSize: 20),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Text(
                               allnotifications[index]['description'],
-                              style: GoogleFonts.montserrat(),
+                              style: GoogleFonts.montserrat(fontSize: 18),
                             ),
                           ),
                         ],

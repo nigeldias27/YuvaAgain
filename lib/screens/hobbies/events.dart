@@ -103,20 +103,21 @@ class _EventsState extends State<Events> {
                                 Text(
                                   allEvents[index]['name'],
                                   style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 8.0),
                                   child: Text(
                                     "Date: " + allEvents[index]['date'],
-                                    style: GoogleFonts.montserrat(),
+                                    style: GoogleFonts.montserrat(fontSize: 18),
                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 8.0),
                                   child: Text(
                                     "Venue: " + allEvents[index]['venue'],
-                                    style: GoogleFonts.montserrat(),
+                                    style: GoogleFonts.montserrat(fontSize: 18),
                                   ),
                                 ),
                                 Padding(
@@ -124,7 +125,7 @@ class _EventsState extends State<Events> {
                                   child: Text(
                                     "Description: " +
                                         allEvents[index]['description'],
-                                    style: GoogleFonts.montserrat(),
+                                    style: GoogleFonts.montserrat(fontSize: 18),
                                   ),
                                 ),
                               ],

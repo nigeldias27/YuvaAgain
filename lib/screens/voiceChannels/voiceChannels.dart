@@ -69,7 +69,7 @@ class _VoiceChannelsState extends State<VoiceChannels> {
                     child: Text(
                       "Voice Channels",
                       style: GoogleFonts.montserrat(
-                          fontSize: 36,
+                          fontSize: 40,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
@@ -82,7 +82,7 @@ class _VoiceChannelsState extends State<VoiceChannels> {
             padding: const EdgeInsets.fromLTRB(12.0, 20, 0, 8),
             child: Text(
               "Your Channels",
-              style: GoogleFonts.montserrat(),
+              style: GoogleFonts.montserrat(fontSize: 20),
             ),
           ),
           Expanded(
@@ -113,7 +113,7 @@ class _VoiceChannelsState extends State<VoiceChannels> {
                             children: [
                               Text(yourchannels[index],
                                   style: GoogleFonts.montserrat(
-                                      color: Colors.white)),
+                                      fontSize: 18, color: Colors.white)),
                               Icon(
                                 Icons.arrow_forward_ios,
                                 color: Colors.white,

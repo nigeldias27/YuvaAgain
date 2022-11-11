@@ -30,6 +30,8 @@ class MyApp extends StatelessWidget {
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
           primarySwatch: Colors.blue,
+          inputDecorationTheme:
+              const InputDecorationTheme(border: OutlineInputBorder()),
         ),
         home: InitializerWidget());
   }

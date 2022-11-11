@@ -7,6 +7,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yuva_again/screens/registration/personalInfo.dart';
+import 'package:yuva_again/widgets/registaration_header.dart';
 
 import '../home.dart';
 import 'auth.dart';
@@ -80,81 +81,100 @@ class _InitializerWidgetState extends State<InitializerWidget> {
             body: const Center(child: CircularProgressIndicator()),
           )
         : Scaffold(
-            body: Center(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height * (7 / 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      "Choose your Language",
-                      style: GoogleFonts.montserrat(
-                        fontSize: 48,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                      child: DropDownTextField(
-                          dropDownIconProperty:
-                              IconProperty(color: Colors.black),
-                          clearIconProperty: IconProperty(color: Colors.black),
-                          textFieldDecoration: InputDecoration(
-                              focusedBorder: const UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.orangeAccent)),
-                              labelText: "Languages",
-                              labelStyle: GoogleFonts.montserrat(
-                                  fontSize: 16, color: Colors.black)),
-                          dropDownList: [
-                            DropDownValueModel(
-                                name: "English", value: "English")
-                          ]),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 48.0),
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Authenticate()));
-                        },
-                        style: ButtonStyle(
-                          overlayColor: MaterialStateColor.resolveWith(
-                              (states) => Colors.transparent),
-                          padding: MaterialStateProperty.resolveWith(
-                              (states) => EdgeInsets.zero),
-                        ),
-                        child: Ink(
-                          decoration: const BoxDecoration(
-                            color: Colors.orangeAccent,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25.0)),
+            backgroundColor: Color(0xffFEFCF3),
+            body: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                RegistrationHeader(),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Choose your Language",
+                          style: GoogleFonts.alata(
+                            fontSize: 26,
                           ),
-                          child: Container(
-                            constraints: const BoxConstraints(
-                                minWidth: 88.0,
-                                minHeight:
-                                    36.0), // min sizes for Material buttons
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Text(
-                                'Login',
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.montserrat(
-                                    color: Colors.black, fontSize: 24),
+                          textAlign: TextAlign.start,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 32.0),
+                          child: DropDownTextField(
+                              textStyle: GoogleFonts.alata(),
+                              listTextStyle: GoogleFonts.alata(),
+                              dropDownIconProperty:
+                                  IconProperty(color: Colors.black),
+                              clearIconProperty:
+                                  IconProperty(color: Colors.black),
+                              textFieldDecoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Color(0xffFDF2C9),
+                                  focusColor: Color(0xffFDF2C9),
+                                  hoverColor: Color(0xffFDF2C9),
+                                  focusedBorder: const OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color(0xff12253A))),
+                                  labelText: "Languages",
+                                  labelStyle: GoogleFonts.alata(
+                                      fontSize: 16, color: Colors.black)),
+                              dropDownList: const [
+                                DropDownValueModel(
+                                    name: "English", value: "English")
+                              ]),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 32, 0, 0),
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Authenticate()));
+                            },
+                            style: ButtonStyle(
+                              overlayColor: MaterialStateColor.resolveWith(
+                                  (states) => Colors.transparent),
+                              padding: MaterialStateProperty.resolveWith(
+                                  (states) => EdgeInsets.zero),
+                            ),
+                            child: Ink(
+                              decoration: const BoxDecoration(
+                                color: Color(0xff12253A),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0)),
+                              ),
+                              child: Container(
+                                constraints: const BoxConstraints(
+                                    minWidth: 88.0,
+                                    minHeight:
+                                        36.0), // min sizes for Material buttons
+                                alignment: Alignment.center,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Text(
+                                    'Login',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.alata(
+                                        color: Colors.white, fontSize: 24),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 10,
+                )
+              ],
             ),
           );
   }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:yuva_again/widgets/header.dart';
 
 class Games extends StatefulWidget {
   const Games({Key? key}) : super(key: key);
@@ -26,27 +27,18 @@ class _GamesState extends State<Games> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Yuva Again",
-            style: GoogleFonts.montserrat(color: Colors.black),
-          ),
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.black,
+    return SafeArea(
+      child: Scaffold(
+          body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: Header(
+              heading: "Games",
             ),
           ),
-          backgroundColor: Colors.orangeAccent,
-          centerTitle: true,
-        ),
-        body: Stack(
-          children: [
-            WebView(
+          Expanded(
+            child: WebView(
               initialUrl:
                   "https://www.seniorsonline.vic.gov.au/services-information/games",
               javascriptMode: JavascriptMode.unrestricted,
@@ -56,11 +48,10 @@ class _GamesState extends State<Games> {
                 });
               },
             ),
-            (isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : Stack())
-          ],
-        ));
+          ),
+        ],
+      )),
+    );
   }
 
   Future<void> checkUserConnection() async {

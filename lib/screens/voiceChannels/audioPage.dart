@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:yuva_again/widgets/header.dart';
 
 class Audio extends StatefulWidget {
   const Audio({Key? key}) : super(key: key);
@@ -70,162 +71,79 @@ class _AudioState extends State<Audio> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Yuva Again",
-            style: GoogleFonts.montserrat(color: Colors.black),
+    return SafeArea(
+      child: Scaffold(
+          body: Column(
+        children: [
+          Header(
+            heading: "Voice Channels",
           ),
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-          ),
-          backgroundColor: Colors.orangeAccent,
-          centerTitle: true,
-        ),
-        body: token == ''
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Status text
-                  Container(height: 40, child: Center(child: _status())),
-                  // Button Row
-                  Padding(
-                    padding: const EdgeInsets.only(top: 27.0),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: TextButton(
-                            style: ButtonStyle(
-                              overlayColor: MaterialStateColor.resolveWith(
-                                  (states) => Colors.transparent),
-                            ),
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    color: _isJoined
-                                        ? Colors.orangeAccent
-                                        : Colors.grey.shade200,
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.black.withOpacity(0.25),
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 4))
-                                    ],
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 16.0, horizontal: 20),
-                                  child: Column(
-                                    children: [
-                                      Icon(
-                                        Icons.add_call,
-                                        color: Colors.black,
-                                      ),
-                                      Text(
-                                        "Join",
-                                        style: GoogleFonts.montserrat(
-                                            color: Colors.black),
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                            onPressed: () => {join()},
-                          ),
-                        ),
-                        Expanded(
-                          child: TextButton(
-                            style: ButtonStyle(
-                              overlayColor: MaterialStateColor.resolveWith(
-                                  (states) => Colors.transparent),
-                            ),
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.black.withOpacity(0.25),
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 4))
-                                    ],
-                                    borderRadius: BorderRadius.circular(100)),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 16.0, horizontal: 20),
-                                  child: Column(
-                                    children: [
-                                      Icon(
-                                        Icons.call_end,
-                                        color: Colors.white,
-                                      ),
-                                      Text(
-                                        "Leave",
-                                        style: GoogleFonts.montserrat(
-                                            color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                            onPressed: () => {leave()},
-                          ),
-                        ),
-                        Expanded(
-                          child: TextButton(
-                            style: ButtonStyle(
-                              overlayColor: MaterialStateColor.resolveWith(
-                                  (states) => Colors.transparent),
-                            ),
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    color: mute
-                                        ? Colors.grey.shade400
-                                        : Colors.grey.shade200,
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.black.withOpacity(0.25),
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 4))
-                                    ],
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 16.0, horizontal: 20),
-                                  child: Column(
-                                    children: [
-                                      Icon(
-                                        mute
-                                            ? Icons.mic_rounded
-                                            : Icons.mic_off_rounded,
-                                        color: Colors.black,
-                                      ),
-                                      Text(
-                                        mute ? "Unmute" : "Mute",
-                                        style: GoogleFonts.montserrat(
-                                            color: Colors.black),
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                            onPressed: () => {
-                              setState(() {
-                                mute ? mute = false : mute = true;
-                                agoraEngine.muteLocalAudioStream(mute);
-                              })
-                            },
-                          ),
-                        ),
-                      ],
+          // Status text
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 32.0),
+            child: InkWell(
+              onTap: () {},
+              child: Container(
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.25),
+                          offset: Offset(0, 4),
+                          blurRadius: 4)
+                    ],
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xfffbf2ce)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 16.0, 0, 16),
+                      child: Text(
+                        "Reading",
+                        style: GoogleFonts.alata(fontSize: 30),
+                      ),
                     ),
-                  ),
-                ],
-              ));
+                    Image.asset('assets/images/events.png'),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 32.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.call_end,
+                                size: 42,
+                              )),
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.mic,
+                                size: 42,
+                              )),
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.volume_mute,
+                                size: 42,
+                              )),
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.person,
+                                size: 42,
+                              ))
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
+      )),
+    );
   }
 
   void join() async {

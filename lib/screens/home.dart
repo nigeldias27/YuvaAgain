@@ -10,10 +10,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rive/rive.dart';
 import 'package:text_to_speech/text_to_speech.dart';
 import 'package:yuva_again/screens/games/games.dart';
+import 'package:yuva_again/screens/hobbies/choice.dart';
 import 'package:yuva_again/screens/hobbies/hobbies.dart';
+import 'package:yuva_again/screens/hobbies/notifications.dart';
 import 'package:yuva_again/screens/voiceChannels/voiceChannels.dart';
 
 import '../services/treeIncrementor.dart';
+import '../widgets/registaration_header.dart';
 
 class Home extends StatefulWidget {
   final username;
@@ -30,6 +33,28 @@ class _HomeState extends State<Home> {
   late StreamSubscription stream;
   StateMachineController? stateMachineController;
   SMIInput<double>? _progress;
+  List<BoxShadow> boxShadows = [
+    BoxShadow(
+        offset: Offset(0, 1),
+        color: Colors.black.withOpacity(0.25),
+        blurRadius: 1,
+        spreadRadius: 0),
+    BoxShadow(
+        offset: Offset(0, 0),
+        color: Color(0xffFDF2C9).withOpacity(1),
+        blurRadius: 0,
+        spreadRadius: 1),
+    BoxShadow(
+        offset: Offset(0, 2),
+        color: Color(0xffCBCAC2).withOpacity(1),
+        blurRadius: 5,
+        spreadRadius: 0),
+    BoxShadow(
+        offset: Offset(0, 1),
+        color: Color(0xffFDF2C9).withOpacity(1),
+        blurRadius: 0,
+        spreadRadius: 0)
+  ];
   bool loadingtreeScore = true;
   @override
   void initState() {
@@ -71,28 +96,9 @@ class _HomeState extends State<Home> {
     final snapshot = await ref.child('users/$user').get();
     if (snapshot.exists) {
       var data = Map<String, dynamic>.from(snapshot.value as dynamic);
-      var dt = DateTime.now();
-      if (dt.hour < 5) {
-        setState(() {
-          greetings = "Good night " + data['Name'];
-        });
-      } else if (dt.hour < 12) {
-        setState(() {
-          greetings = "Good morning " + data['Name'];
-        });
-      } else if (dt.hour < 15) {
-        setState(() {
-          greetings = "Good afternoon " + data['Name'];
-        });
-      } else if (dt.hour < 19) {
-        setState(() {
-          greetings = "Good evening " + data['Name'];
-        });
-      } else {
-        setState(() {
-          greetings = "Good night " + data['Name'];
-        });
-      }
+      setState(() {
+        greetings = data['Name'];
+      });
     }
   }
 
@@ -100,51 +106,23 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text(
-            "Yuva Again",
-            style: GoogleFonts.montserrat(
-                color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: Colors.orangeAccent,
-          centerTitle: true,
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            TextToSpeech tts = TextToSpeech();
-            tts.speak(greetings);
-            sleep(Duration(seconds: 3));
-            tts.speak(" Voice Channels, Hobbies and Games");
-          },
-          backgroundColor: Colors.orangeAccent,
-          child: Icon(
-            Icons.speaker_group,
-            color: Colors.black,
-          ),
-        ),
+        backgroundColor: Color(0xffFEFCF3),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 32.0, 10, 0),
-                  child: Text(
-                    greetings,
-                    style: GoogleFonts.montserrat(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
+                RegistrationHeader(
+                  headingText: greetings,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5.0),
                   child: Wrap(
+                    alignment: WrapAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(3.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(20),
                           onTap: () {
@@ -156,22 +134,23 @@ class _HomeState extends State<Home> {
                           },
                           child: Ink(
                             decoration: BoxDecoration(
-                                color: Colors.orangeAccent,
+                                boxShadow: boxShadows,
+                                color: Color(0xffFDF2C9),
                                 borderRadius: BorderRadius.circular(20)),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
+                                  Image.asset(
+                                    "assets/images/Microphone.png",
+                                    width: 30,
+                                  ),
                                   Text(
                                     'Voice Channels',
-                                    style: GoogleFonts.montserrat(
+                                    style: GoogleFonts.alata(
                                         color: Colors.black, fontSize: 18),
                                   ),
-                                  Image.network(
-                                    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Google_Voice_icon_%282020%29.svg/2020px-Google_Voice_icon_%282020%29.svg.png",
-                                    width: 20,
-                                  )
                                 ],
                               ),
                             ),
@@ -179,7 +158,7 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(3.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(20),
                           onTap: () {
@@ -187,26 +166,27 @@ class _HomeState extends State<Home> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (builder) => Hobbies()));
+                                    builder: (builder) => MenuChoice()));
                           },
                           child: Ink(
                             decoration: BoxDecoration(
-                                color: Colors.orangeAccent,
+                                boxShadow: boxShadows,
+                                color: Color(0xffFDF2C9),
                                 borderRadius: BorderRadius.circular(20)),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
+                                  Image.asset(
+                                    "assets/images/Schedule.png",
+                                    width: 20,
+                                  ),
                                   Text(
                                     'Hobbies',
-                                    style: GoogleFonts.montserrat(
+                                    style: GoogleFonts.alata(
                                         color: Colors.black, fontSize: 18),
                                   ),
-                                  Image.network(
-                                    "https://cdn-icons-png.flaticon.com/512/3713/3713309.png",
-                                    width: 20,
-                                  )
                                 ],
                               ),
                             ),
@@ -214,7 +194,7 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(3.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(20),
                           onTap: () {
@@ -226,22 +206,23 @@ class _HomeState extends State<Home> {
                           },
                           child: Ink(
                             decoration: BoxDecoration(
-                                color: Colors.orangeAccent,
+                                boxShadow: boxShadows,
+                                color: Color(0xffFDF2C9),
                                 borderRadius: BorderRadius.circular(20)),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
+                                  Image.asset(
+                                    "assets/images/Game.png",
+                                    width: 20,
+                                  ),
                                   Text(
                                     'Games',
-                                    style: GoogleFonts.montserrat(
+                                    style: GoogleFonts.alata(
                                         color: Colors.black, fontSize: 18),
                                   ),
-                                  Image.network(
-                                    "https://cdn-icons-png.flaticon.com/512/2533/2533402.png",
-                                    width: 20,
-                                  )
                                 ],
                               ),
                             ),
@@ -260,7 +241,51 @@ class _HomeState extends State<Home> {
                       artboard: riveartboard!,
                       alignment: Alignment.center,
                     ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Color(0xff333232),
+                    borderRadius: BorderRadius.all(Radius.circular(50))),
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 8, 0, 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.notifications,
+                            size: 34,
+                            color: Color(0xffFCE39A),
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.home,
+                            size: 34,
+                            color: Color(0xffFDBC4C),
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.settings,
+                            size: 34,
+                            color: Color(0xffFCE39A),
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.person,
+                            size: 34,
+                            color: Color(0xffFCE39A),
+                          )),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

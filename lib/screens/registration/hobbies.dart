@@ -1,32 +1,28 @@
 import 'package:dropdown_textfield/dropdown_textfield.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:location/location.dart';
-import 'package:yuva_again/screens/hobbies/hobbies.dart';
-import 'package:yuva_again/screens/home.dart';
-import 'package:yuva_again/screens/registration/hobbies.dart';
-import 'package:yuva_again/services/getChannels.dart';
 import 'package:yuva_again/widgets/registaration_header.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:yuva_again/screens/home.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:yuva_again/services/getChannels.dart';
 
-class PersonalInfo extends StatefulWidget {
-  const PersonalInfo({Key? key}) : super(key: key);
+import 'package:location/location.dart';
+
+class HobbiesRegistration extends StatefulWidget {
+  final name, age, gender;
+  const HobbiesRegistration({Key? key, this.name, this.age, this.gender})
+      : super(key: key);
 
   @override
-  State<PersonalInfo> createState() => _PersonalInfoState();
+  State<HobbiesRegistration> createState() => _HobbiesRegistrationState();
 }
 
-class _PersonalInfoState extends State<PersonalInfo> {
-  final age = TextEditingController();
-  FirebaseAuth? _auth;
-  final name = TextEditingController();
-  late SingleValueDropDownController _cnt = SingleValueDropDownController();
+class _HobbiesRegistrationState extends State<HobbiesRegistration> {
   late MultiValueDropDownController _cntMult = MultiValueDropDownController();
   late MultiValueDropDownController _cntMulti = MultiValueDropDownController();
   List<DropDownValueModel> current_interests = [];
-
+  FirebaseAuth? _auth;
   @override
   void initState() {
     super.initState();
@@ -68,59 +64,16 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     child: Row(
                       children: [
                         Expanded(
-                          child: TextField(
-                            controller: name,
-                            style: GoogleFonts.alata(color: Colors.black),
-                            decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Color(0xffFDF2C9),
-                                focusColor: Color(0xffFDF2C9),
-                                hoverColor: Color(0xffFDF2C9),
-                                focusedBorder: const OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff12253A))),
-                                labelText: "Name",
-                                labelStyle: GoogleFonts.alata(
-                                    fontSize: 16, color: Color(0xff12253A))),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 8.0, 24, 8),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            keyboardType: TextInputType.number,
-                            controller: age,
-                            style: GoogleFonts.alata(color: Colors.black),
-                            decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Color(0xffFDF2C9),
-                                focusColor: Color(0xffFDF2C9),
-                                hoverColor: Color(0xffFDF2C9),
-                                focusedBorder: const OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff12253A))),
-                                labelText: "Age",
-                                labelStyle: GoogleFonts.alata(
-                                    fontSize: 16, color: Color(0xff12253A))),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 8.0, 24, 8),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: DropDownTextField(
-                            textStyle: GoogleFonts.montserrat(),
-                            controller: _cnt,
-                            clearOption: true,
+                          child: DropDownTextField.multiSelection(
+                            controller: _cntMult,
+                            submitButtonTextStyle:
+                                GoogleFonts.alata(color: Colors.white),
+                            checkBoxProperty: CheckBoxProperty(
+                                activeColor: Color(0xff12253A)),
+                            submitButtonColor: Color(0xff12253A),
+                            listTextStyle:
+                                GoogleFonts.alata(color: Colors.black),
+                            dropDownList: current_interests,
                             dropDownIconProperty:
                                 IconProperty(color: Colors.black),
                             clearIconProperty:
@@ -133,7 +86,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 focusedBorder: const OutlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Color(0xff12253A))),
-                                labelText: "Gender",
+                                labelText: "Current Interests",
                                 labelStyle: GoogleFonts.alata(
                                     fontSize: 16, color: Color(0xff12253A))),
                             validator: (value) {
@@ -143,11 +96,48 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 return null;
                               }
                             },
-                            dropDownList: const [
-                              DropDownValueModel(name: 'Male', value: "Male"),
-                              DropDownValueModel(
-                                  name: 'Female', value: "Female")
-                            ],
+                            onChanged: (val) {},
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 8.0, 24, 8),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: DropDownTextField.multiSelection(
+                            controller: _cntMulti,
+                            submitButtonTextStyle:
+                                GoogleFonts.alata(color: Colors.white),
+                            checkBoxProperty: CheckBoxProperty(
+                                activeColor: Color(0xff12253A)),
+                            submitButtonColor: Color(0xff12253A),
+                            listTextStyle: GoogleFonts.alata(),
+                            dropDownList: current_interests,
+                            dropDownIconProperty:
+                                IconProperty(color: Colors.black),
+                            clearIconProperty:
+                                IconProperty(color: Colors.black),
+                            textFieldDecoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color(0xffFDF2C9),
+                                focusColor: Color(0xffFDF2C9),
+                                hoverColor: Color(0xffFDF2C9),
+                                focusedBorder: const OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xff12253A))),
+                                labelText: "Hobbies that you want to build",
+                                labelStyle: GoogleFonts.alata(
+                                    fontSize: 16, color: Color(0xff12253A))),
+                            validator: (value) {
+                              if (value == null) {
+                                return "Required field";
+                              } else {
+                                return null;
+                              }
+                            },
                             onChanged: (val) {},
                           ),
                         ),
@@ -166,16 +156,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         color: Colors.black.withOpacity(0.25))
                   ]),
                   child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HobbiesRegistration(
-                                    name: name.text,
-                                    age: age.text,
-                                    gender: _cnt.dropDownValue!.name,
-                                  )));
-                    },
+                    onPressed: personal_added,
                     style: ButtonStyle(
                       overlayColor: MaterialStateColor.resolveWith(
                           (states) => Colors.transparent),
@@ -220,9 +201,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
         FirebaseDatabase.instance.ref('users/' + _auth!.currentUser!.uid);
     String latlong = loc.latitude.toString() + ',' + loc.longitude.toString();
     await ref.set({
-      "Name": name.text,
-      "Age": age.text,
-      "Gender": _cnt.dropDownValue!.name,
+      "Name": widget.name,
+      "Age": widget.age,
+      "Gender": widget.gender,
       "Current Interests":
           _cntMult.dropDownValueList!.map((e) => e.name).toList().toString(),
       "Future Interests":

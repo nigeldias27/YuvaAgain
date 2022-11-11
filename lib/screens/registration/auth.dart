@@ -4,8 +4,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:otp_text_field/otp_field.dart';
+import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:yuva_again/screens/registration/personalInfo.dart';
+import 'package:yuva_again/widgets/registaration_header.dart';
 
 import '../home.dart';
 import 'init.dart';
@@ -65,12 +67,8 @@ class _AuthenticateState extends State<Authenticate> {
     return Form(
       key: mobFormKey,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            "Yuva Again",
-            style: GoogleFonts.montserrat(fontSize: 48),
-          ),
+          RegistrationHeader(),
           SizedBox(
             height: MediaQuery.of(context).size.height / 12,
           ),
@@ -91,13 +89,17 @@ class _AuthenticateState extends State<Authenticate> {
                   width: 250,
                   child: TextFormField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: Colors.black),
+                    style: GoogleFonts.alata(color: Colors.black),
                     decoration: InputDecoration(
-                        focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.orangeAccent)),
-                        hintText: "Enter your phone number",
-                        hintStyle: GoogleFonts.montserrat(
-                            fontSize: 16, color: Colors.black)),
+                        filled: true,
+                        fillColor: Color(0xffFDF2C9),
+                        focusColor: Color(0xffFDF2C9),
+                        hoverColor: Color(0xffFDF2C9),
+                        focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xff12253A))),
+                        labelText: "Enter your phone number",
+                        labelStyle: GoogleFonts.alata(
+                            fontSize: 16, color: Color(0xff12253A))),
                     validator: (val) {
                       if (val == null || val.length != 10) {
                         return "Please enter a valid moble number.";
@@ -116,64 +118,81 @@ class _AuthenticateState extends State<Authenticate> {
           SizedBox(
             height: MediaQuery.of(context).size.height / 16,
           ),
-          TextButton(
-            child: Text(
-              "Get OTP",
-              style: GoogleFonts.montserrat(fontSize: 22, color: Colors.black),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 48.0),
+            child: TextButton(
+              onPressed: () async {
+                final isValid = mobFormKey.currentState!.validate();
+                if (isValid) {
+                  mobFormKey.currentState!.save();
+
+                  setState(() {
+                    showLoading = true;
+                  });
+                  await _auth.verifyPhoneNumber(
+                      timeout: const Duration(seconds: 120),
+                      phoneNumber: countryCode + mob_no,
+                      verificationCompleted: (phoneAuthCredential) async {
+                        setState(() {
+                          showLoading = false;
+                        });
+
+                        signInWithPhoneAuthCredential(phoneAuthCredential);
+                      },
+                      verificationFailed: (verificationFailed) async {
+                        setState(() {
+                          showLoading = false;
+                        });
+
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(verificationFailed.message!),
+                            duration: const Duration(seconds: 5)));
+                      },
+                      codeSent: (verificationId, resendingToken) async {
+                        setState(() {
+                          showLoading = false;
+                          curr_state = ScreenState.OTP_STATE;
+                          _verificationId = verificationId;
+                        });
+                      },
+                      codeAutoRetrievalTimeout: (verificationId) async {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const InitializerWidget(
+                                      registering: true,
+                                    )));
+                      });
+                }
+              },
+              style: ButtonStyle(
+                overlayColor: MaterialStateColor.resolveWith(
+                    (states) => Colors.transparent),
+                padding: MaterialStateProperty.resolveWith(
+                    (states) => EdgeInsets.zero),
+              ),
+              child: Ink(
+                decoration: const BoxDecoration(
+                  color: Color(0xff12253A),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                child: Container(
+                  constraints: const BoxConstraints(
+                      minWidth: 88.0,
+                      minHeight: 36.0), // min sizes for Material buttons
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text(
+                      'Get OTP',
+                      textAlign: TextAlign.center,
+                      style:
+                          GoogleFonts.alata(color: Colors.white, fontSize: 24),
+                    ),
+                  ),
+                ),
+              ),
             ),
-            style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all<Size>(Size(150.0, 50.0)),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50.0),
-                  //side: BorderSide(color: Colors.red)
-                )),
-                backgroundColor:
-                    MaterialStateProperty.all(Colors.orangeAccent)),
-            onPressed: () async {
-              final isValid = mobFormKey.currentState!.validate();
-              if (isValid) {
-                mobFormKey.currentState!.save();
-
-                setState(() {
-                  showLoading = true;
-                });
-                await _auth.verifyPhoneNumber(
-                    timeout: const Duration(seconds: 120),
-                    phoneNumber: countryCode + mob_no,
-                    verificationCompleted: (phoneAuthCredential) async {
-                      setState(() {
-                        showLoading = false;
-                      });
-
-                      signInWithPhoneAuthCredential(phoneAuthCredential);
-                    },
-                    verificationFailed: (verificationFailed) async {
-                      setState(() {
-                        showLoading = false;
-                      });
-
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(verificationFailed.message!),
-                          duration: const Duration(seconds: 5)));
-                    },
-                    codeSent: (verificationId, resendingToken) async {
-                      setState(() {
-                        showLoading = false;
-                        curr_state = ScreenState.OTP_STATE;
-                        _verificationId = verificationId;
-                      });
-                    },
-                    codeAutoRetrievalTimeout: (verificationId) async {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const InitializerWidget(
-                                    registering: true,
-                                  )));
-                    });
-              }
-            },
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height / 12,
@@ -188,13 +207,9 @@ class _AuthenticateState extends State<Authenticate> {
     return Form(
       key: otpFormKey,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            "Verify\nNumber",
-            textAlign: TextAlign.center,
-            style: GoogleFonts.montserrat(fontSize: 48),
-          ),
+          RegistrationHeader(),
           SizedBox(height: MediaQuery.of(context).size.height / 12),
           // TextFormField(
           //   keyboardType: TextInputType.number,
@@ -210,10 +225,11 @@ class _AuthenticateState extends State<Authenticate> {
           //   },
           // ),
           OTPTextField(
+            otpFieldStyle: OtpFieldStyle(focusBorderColor: Color(0xff12253A)),
             length: 6,
             width: MediaQuery.of(context).size.width,
             fieldWidth: 40,
-            style: TextStyle(fontSize: 17, color: Colors.black),
+            style: GoogleFonts.alata(fontSize: 17, color: Color(0xff12253A)),
             textFieldAlignment: MainAxisAlignment.spaceAround,
             fieldStyle: FieldStyle.underline,
             onCompleted: (pin) {
@@ -224,23 +240,39 @@ class _AuthenticateState extends State<Authenticate> {
           SizedBox(
             height: MediaQuery.of(context).size.height / 16,
           ),
-          ElevatedButton(
-              child: Text(
-                "Verify",
-                style:
-                    GoogleFonts.montserrat(fontSize: 22, color: Colors.black),
-              ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 48.0),
+            child: TextButton(
+              onPressed: onOtpPressed,
               style: ButtonStyle(
-                  minimumSize:
-                      MaterialStateProperty.all<Size>(Size(150.0, 50.0)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
-                    //side: BorderSide(color: Colors.red)
-                  )),
-                  backgroundColor:
-                      MaterialStateProperty.all(Colors.orangeAccent)),
-              onPressed: onOtpPressed),
+                overlayColor: MaterialStateColor.resolveWith(
+                    (states) => Colors.transparent),
+                padding: MaterialStateProperty.resolveWith(
+                    (states) => EdgeInsets.zero),
+              ),
+              child: Ink(
+                decoration: const BoxDecoration(
+                  color: Color(0xff12253A),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                child: Container(
+                  constraints: const BoxConstraints(
+                      minWidth: 88.0,
+                      minHeight: 36.0), // min sizes for Material buttons
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text(
+                      'Verify',
+                      textAlign: TextAlign.center,
+                      style:
+                          GoogleFonts.alata(color: Colors.white, fontSize: 24),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
           SizedBox(height: MediaQuery.of(context).size.height / 12),
         ],
       ),
@@ -261,14 +293,16 @@ class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Color(0xffFEFCF3),
         body: Stack(
-      children: [
-        showLoading
-            ? Center(child: CircularProgressIndicator())
-            : curr_state == ScreenState.MOBILE_NO_STATE
-                ? get_mob_state(context)
-                : get_otp_state(context),
-      ],
-    ));
+          children: [
+            showLoading
+                ? Center(child: CircularProgressIndicator())
+                : curr_state == ScreenState.MOBILE_NO_STATE
+                    ? get_mob_state(context)
+                    : get_otp_state(context),
+          ],
+        ));
   }
 }

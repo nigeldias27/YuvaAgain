@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:yuva_again/screens/registration/init.dart';
 import 'package:yuva_again/screens/registration/login.dart';
 
@@ -33,6 +36,71 @@ class MyApp extends StatelessWidget {
           inputDecorationTheme:
               const InputDecorationTheme(border: OutlineInputBorder()),
         ),
-        home: InitializerWidget());
+        home: SplashScreen());
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    Timer(
+        Duration(seconds: 3),
+        () => Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (_, __, ___) => InitializerWidget(),
+              transitionDuration: Duration(seconds: 1),
+              transitionsBuilder: (_, a, __, c) =>
+                  FadeTransition(opacity: a, child: c),
+            )));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: Scaffold(
+      body: Container(
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/backgroundGradient.png'),
+                  fit: BoxFit.cover)),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: Color(0xff12253A),
+                    borderRadius: BorderRadius.circular(50)),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
+                  child: Text(
+                    "Ya",
+                    style: GoogleFonts.dancingScript(
+                        color: Colors.white, fontSize: 64),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Text(
+                  "Yuva Again",
+                  style:
+                      GoogleFonts.alata(color: Color(0xff12253A), fontSize: 30),
+                ),
+              )
+            ],
+          )),
+    ));
   }
 }

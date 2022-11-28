@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuva_again/services/getNotifications.dart';
@@ -19,6 +22,12 @@ class _NotificationsState extends State<Notifications> {
   }
 
   init_wrapper() async {
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: Random().nextInt(100),
+            title: 'First Notification',
+            body: "somebody",
+            channelKey: 'Yuva Again'));
     allnotifications = await getNotifications();
     setState(() {
       allnotifications;

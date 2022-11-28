@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yuva_again/screens/hobbies/HobbiesPage.dart';
+import 'package:yuva_again/screens/hobbies/eventsPage.dart';
+import 'package:yuva_again/screens/hobbies/hobbies.dart';
 import 'package:yuva_again/widgets/header.dart';
 
 class MenuChoice extends StatefulWidget {
@@ -22,7 +25,10 @@ class _MenuChoiceState extends State<MenuChoice> {
               padding:
                   const EdgeInsets.symmetric(vertical: 32, horizontal: 32.0),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (builder) => EventsPage()));
+                },
                 child: Container(
                   decoration: BoxDecoration(
                       boxShadow: [
@@ -51,7 +57,10 @@ class _MenuChoiceState extends State<MenuChoice> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32.0),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (builder) => HobbyTracker()));
+                },
                 child: Container(
                   decoration: BoxDecoration(
                       boxShadow: [

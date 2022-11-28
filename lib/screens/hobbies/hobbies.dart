@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuva_again/screens/hobbies/events.dart';
-import 'package:yuva_again/screens/hobbies/notifications.dart';
+import 'package:yuva_again/screens/bottom_navigation_bar/notifications.dart';
 
 import '../../services/treeIncrementor.dart';
 

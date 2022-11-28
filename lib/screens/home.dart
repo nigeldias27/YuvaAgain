@@ -9,10 +9,11 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rive/rive.dart';
 import 'package:text_to_speech/text_to_speech.dart';
+import 'package:yuva_again/screens/bottom_navigation_bar/profile.dart';
 import 'package:yuva_again/screens/games/games.dart';
 import 'package:yuva_again/screens/hobbies/choice.dart';
 import 'package:yuva_again/screens/hobbies/hobbies.dart';
-import 'package:yuva_again/screens/hobbies/notifications.dart';
+import 'package:yuva_again/screens/bottom_navigation_bar/notifications.dart';
 import 'package:yuva_again/screens/voiceChannels/voiceChannels.dart';
 
 import '../services/treeIncrementor.dart';
@@ -65,10 +66,14 @@ class _HomeState extends State<Home> {
   init_wrapper() async {
     _auth = FirebaseAuth.instance;
     await greeting();
-    await rootBundle.load('assets/tree_demo.riv').then((data) async {
+    await rootBundle.load('assets/tree_demo1.riv').then((data) async {
+      print('Loaded');
       final file = RiveFile.import(data);
       final artboard = file.mainArtboard;
-      var controller = StateMachineController.fromArtboard(artboard, 'Grow');
+      print(artboard);
+      var controller =
+          StateMachineController.fromArtboard(artboard, 'State Machine 1');
+      print(controller);
       if (controller != null) {
         artboard.addController(controller);
         _progress = controller.findInput('input');
@@ -254,7 +259,12 @@ class _HomeState extends State<Home> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => Notifications()));
+                          },
                           icon: Icon(
                             Icons.notifications,
                             size: 34,
@@ -275,7 +285,12 @@ class _HomeState extends State<Home> {
                             color: Color(0xffFCE39A),
                           )),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => Profile()));
+                          },
                           icon: Icon(
                             Icons.person,
                             size: 34,

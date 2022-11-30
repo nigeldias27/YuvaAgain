@@ -52,6 +52,12 @@ dependencies:
   calendar_timeline: ^1.0.5
   webview_flutter: ^3.0.4
   agora_rtc_engine: ^6.0.0
+  flutter_webrtc: ^0.9.17
+  sdp_transform: ^0.3.2
+  firebase_messaging: ^13.1.0
+  uuid: ^3.0.7
+  cloud_firestore: ^3.5.1
+  just_audio: ^0.9.30
 
 dev_dependencies:
   flutter_test:

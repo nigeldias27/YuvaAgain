@@ -1,72 +1,74 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'dart:convert';
+import 'package:sdp_transform/sdp_transform.dart';
+
 import 'package:permission_handler/permission_handler.dart';
 import 'package:yuva_again/widgets/header.dart';
+import 'package:yuva_again/screens/voiceChannels/webrtcLogic.dart';
+import 'package:just_audio/just_audio.dart';
 
 class Audio extends StatefulWidget {
-  const Audio({Key? key}) : super(key: key);
+  // final uid;
+  final String? roomId;
+
+  // const Audio({Key? key, required this.uid, this.roomID}) : super(key: key);
+  const Audio({Key? key, this.roomId}) : super(key: key);
 
   @override
   State<Audio> createState() => _AudioState();
 }
 
 class _AudioState extends State<Audio> {
-  String channelName = "Knitting";
-  String token = "";
-  static const appId = "5ef9b48c22384b14bf4faccc9d250bc0";
-  int uid = 0; // uid of the local user
-  bool mute = false;
-  int? _remoteUid; // uid of the remote user
-  bool _isJoined = false; // Indicates if the local user has joined the channel
-  late RtcEngine agoraEngine; // Agora engine instance
+  final _audioPlayer = AudioPlayer();
+
+  WebRTCLogic webrtcLogic = WebRTCLogic();
+  final _localRenderer = RTCVideoRenderer();
+  final _remoteRenderer = RTCVideoRenderer();
+  String? roomId;
+
+  initializeAudio() async {
+    await _audioPlayer.setUrl(
+        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3");
+    _audioPlayer.play();
+  }
+
+  initializeWebRTC() async {
+    await _localRenderer.initialize();
+    await _remoteRenderer.initialize();
+
+    webrtcLogic.onAddRemoteStream = ((stream) {
+      _remoteRenderer.srcObject = stream;
+      setState(() {});
+    });
+    webrtcLogic.openUserMedia(_localRenderer, _remoteRenderer);
+    // roomId = await webrtcLogic.createRoom(_remoteRenderer);
+    // print("roomID: $roomId");
+    roomId = widget.roomId;
+    webrtcLogic.joinRoom(
+      roomId!,
+      _remoteRenderer,
+    );
+  }
+
   @override
   void initState() {
+    initializeWebRTC();
+    initializeAudio();
     super.initState();
-    // Set up an instance of Agora engine
-    init_wrapper();
   }
 
-  init_wrapper() async {
-    final snapshot = await FirebaseDatabase.instance.ref('token').get();
-    var data = Map<String, dynamic>.from(snapshot.value as dynamic);
-    setState(() {
-      token = data['Knitting'];
-    });
-    setupVoiceSDKEngine();
-  }
-
-  Future<void> setupVoiceSDKEngine() async {
-    // retrieve or request microphone permission
-    await [Permission.microphone].request();
-
-    //create an instance of the Agora engine
-    agoraEngine = createAgoraRtcEngine();
-    await agoraEngine.initialize(const RtcEngineContext(appId: appId));
-
-    // Register the event handler
-    agoraEngine.registerEventHandler(
-      RtcEngineEventHandler(
-        onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
-          setState(() {
-            _isJoined = true;
-          });
-        },
-        onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
-          setState(() {
-            _remoteUid = remoteUid;
-          });
-        },
-        onUserOffline: (RtcConnection connection, int remoteUid,
-            UserOfflineReasonType reason) {
-          setState(() {
-            _remoteUid = null;
-          });
-        },
-      ),
-    );
+  @override
+  void dispose() async {
+    await _localRenderer.dispose();
+    await _remoteRenderer.dispose();
+    webrtcLogic.hangUp(_localRenderer);
+    _audioPlayer.dispose();
+    super.dispose();
   }
 
   @override
@@ -110,19 +112,25 @@ class _AudioState extends State<Audio> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                dispose();
+                              },
                               icon: Icon(
                                 Icons.call_end,
                                 size: 42,
                               )),
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                webrtcLogic.muteMic();
+                              },
                               icon: Icon(
                                 Icons.mic,
                                 size: 42,
                               )),
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                webrtcLogic.muteAudio();
+                              },
                               icon: Icon(
                                 Icons.volume_mute,
                                 size: 42,
@@ -144,50 +152,5 @@ class _AudioState extends State<Audio> {
         ],
       )),
     );
-  }
-
-  void join() async {
-    // Set channel options including the client role and channel profile
-    ChannelMediaOptions options = const ChannelMediaOptions(
-      clientRoleType: ClientRoleType.clientRoleBroadcaster,
-      channelProfile: ChannelProfileType.channelProfileCommunication,
-    );
-
-    await agoraEngine.joinChannel(
-      token: token,
-      channelId: channelName,
-      options: options,
-      uid: uid,
-    );
-  }
-
-  void leave() {
-    setState(() {
-      _isJoined = false;
-      _remoteUid = null;
-    });
-    agoraEngine.leaveChannel();
-  }
-
-  Widget _status() {
-    String statusText;
-
-    if (!_isJoined)
-      statusText = 'Join a channel';
-    else if (_remoteUid == null)
-      statusText = 'Waiting for a remote user to join...';
-    else
-      statusText = 'Connected to remote user, uid:$_remoteUid';
-
-    return Text(
-      statusText,
-      style: GoogleFonts.montserrat(),
-    );
-  }
-
-  @override
-  void dispose() async {
-    await agoraEngine.leaveChannel();
-    super.dispose();
   }
 }

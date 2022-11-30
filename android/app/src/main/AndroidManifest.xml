@@ -34,11 +34,20 @@
     <uses-permission  android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission  android:name="android.permission.INTERNET"  />
     <uses-permission  android:name="android.permission.RECORD_AUDIO"  />
-    <uses-permission  android:name="android.permission.CAMERA"  />
     <uses-permission  android:name="android.permission.MODIFY_AUDIO_SETTINGS"  />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission  android:name="android.permission.CAMERA"  />
+
     <uses-permission  android:name="android.permission.ACCESS_NETWORK_STATE"  />
-    <!-- The Agora SDK requires Bluetooth permissions in case users are using Bluetooth devices.-->
-    <uses-permission  android:name="android.permission.BLUETOOTH"  />
+<!--    Possibly necessary permission; uncomment if network problems occur-->
+<!--    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />-->
+
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
     <queries>
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE" />

@@ -41,6 +41,13 @@
             {
               "client_id": "27568309259-be404sf748saq2l695qlc912q88ivro9.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "27568309259-pumm6kldd5clnu5njnvlfreu7lea89qk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.yuvaAgain"
+              }
             }
           ]
         }
@@ -82,6 +89,13 @@
             {
               "client_id": "27568309259-be404sf748saq2l695qlc912q88ivro9.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "27568309259-pumm6kldd5clnu5njnvlfreu7lea89qk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.yuvaAgain"
+              }
             }
           ]
         }
@@ -95,6 +109,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "27568309259-mtgec4p67306857l8v0b8bo4cgqrbodo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.yuva_again",
+            "certificate_hash": "64a93583ba16caec44ee3bb2d777849319f4e10e"
+          }
+        },
         {
           "client_id": "27568309259-be404sf748saq2l695qlc912q88ivro9.apps.googleusercontent.com",
           "client_type": 3
@@ -114,6 +136,13 @@
             {
               "client_id": "27568309259-be404sf748saq2l695qlc912q88ivro9.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "27568309259-pumm6kldd5clnu5njnvlfreu7lea89qk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.yuvaAgain"
+              }
             }
           ]
         }
@@ -154,6 +183,13 @@
             {
               "client_id": "27568309259-be404sf748saq2l695qlc912q88ivro9.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "27568309259-pumm6kldd5clnu5njnvlfreu7lea89qk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.yuvaAgain"
+              }
             }
           ]
         }

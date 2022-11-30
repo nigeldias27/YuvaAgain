@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>27568309259-pumm6kldd5clnu5njnvlfreu7lea89qk.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.27568309259-pumm6kldd5clnu5njnvlfreu7lea89qk</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>27568309259-3nak6aki2609c6759a2kv0rrel2lv2ml.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCi7QYXezXU9qqHGq87judvq2vovZkpqoY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>27568309259</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.yuvaAgain</string>
+	<key>PROJECT_ID</key>
+	<string>dice2-1f790</string>
+	<key>STORAGE_BUCKET</key>
+	<string>dice2-1f790.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:27568309259:ios:fab2a5dc58c4c6709bf30e</string>
+	<key>DATABASE_URL</key>
+	<string>https://dice2-1f790.firebaseio.com</string>
+</dict>
+</plist>

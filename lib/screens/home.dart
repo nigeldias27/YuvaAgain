@@ -207,7 +207,10 @@ class _HomeState extends State<Home> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (builder) => Games()));
+                                    builder: (builder) => Games(
+                                          url:
+                                              "https://www.seniorsonline.vic.gov.au/services-information/games",
+                                        )));
                           },
                           child: Ink(
                             decoration: BoxDecoration(

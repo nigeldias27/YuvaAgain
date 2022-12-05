@@ -7,10 +7,17 @@ import 'package:yuva_again/screens/registration/login.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import 'models/reminders.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await Hive.initFlutter();
+  Hive.registerAdapter(RemindersAdapter());
+  await Hive.openBox<Reminders>('reminders');
   runApp(const MyApp());
   AwesomeNotifications().initialize(null, [
     NotificationChannel(

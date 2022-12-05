@@ -52,6 +52,13 @@ dependencies:
   calendar_timeline: ^1.0.5
   webview_flutter: ^3.0.4
   agora_rtc_engine: ^6.0.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  build_runner: ^2.3.2
+  hive_generator: ^2.0.0
+  intl: ^0.17.0
+  http: ^0.13.5
+  latlong2: ^0.8.1
 
 dev_dependencies:
   flutter_test:

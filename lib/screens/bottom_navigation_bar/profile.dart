@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuva_again/screens/home.dart';
@@ -12,10 +13,26 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  FirebaseAuth? _auth;
+  TextEditingController phoneno = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    init_wrapper();
+  }
+
+  init_wrapper() async {
+    _auth = FirebaseAuth.instance;
+    print(_auth?.currentUser?.phoneNumber);
+    phoneno.text = (_auth?.currentUser?.phoneNumber)!;
+    phoneno.value = TextEditingValue(text: (_auth?.currentUser?.phoneNumber)!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xffFEFCF3),
       body: Column(
         children: [
@@ -75,6 +92,7 @@ class _ProfileState extends State<Profile> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
                       child: TextField(
+                        controller: phoneno,
                         keyboardType: TextInputType.number,
                         style: GoogleFonts.alata(color: Colors.black),
                         decoration: InputDecoration(

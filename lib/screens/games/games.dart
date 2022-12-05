@@ -6,7 +6,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:yuva_again/widgets/header.dart';
 
 class Games extends StatefulWidget {
-  const Games({Key? key}) : super(key: key);
+  final url;
+  const Games({Key? key, this.url}) : super(key: key);
 
   @override
   State<Games> createState() => _GamesState();
@@ -34,13 +35,15 @@ class _GamesState extends State<Games> {
           Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
             child: Header(
-              heading: "Games",
+              heading: widget.url ==
+                      "https://www.seniorsonline.vic.gov.au/services-information/games"
+                  ? "Games"
+                  : 'Event',
             ),
           ),
           Expanded(
             child: WebView(
-              initialUrl:
-                  "https://www.seniorsonline.vic.gov.au/services-information/games",
+              initialUrl: widget.url,
               javascriptMode: JavascriptMode.unrestricted,
               onPageFinished: (finish) {
                 setState(() {

@@ -1,8 +1,11 @@
+import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuva_again/screens/home.dart';
+import 'package:yuva_again/services/getMyChannels.dart';
 
+import '../../services/getChannels.dart';
 import 'notifications.dart';
 
 class Profile extends StatefulWidget {
@@ -15,6 +18,9 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   FirebaseAuth? _auth;
   TextEditingController phoneno = TextEditingController();
+  List<DropDownValueModel> current_interests = [];
+  List myChannels = [];
+  late MultiValueDropDownController _cntMult = MultiValueDropDownController();
   @override
   void initState() {
     super.initState();
@@ -26,6 +32,24 @@ class _ProfileState extends State<Profile> {
     print(_auth?.currentUser?.phoneNumber);
     phoneno.text = (_auth?.currentUser?.phoneNumber)!;
     phoneno.value = TextEditingValue(text: (_auth?.currentUser?.phoneNumber)!);
+    print("Getting channels");
+    List channels = await getsChannels();
+    List mychannels = await getMyChannels(_auth?.currentUser?.uid);
+    print(mychannels);
+
+    List<DropDownValueModel> allchannels = channels
+        .map(
+          (e) => DropDownValueModel(name: e, value: e),
+        )
+        .toList();
+    _cntMult.setDropDown(mychannels.map((e) {
+      print(e.toString().trim());
+      return DropDownValueModel(
+          name: e.toString().trim(), value: e.toString().trim());
+    }).toList());
+    setState(() {
+      current_interests = allchannels;
+    });
   }
 
   @override
@@ -117,10 +141,18 @@ class _ProfileState extends State<Profile> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        style: GoogleFonts.alata(color: Colors.black),
-                        decoration: InputDecoration(
+                      child: DropDownTextField.multiSelection(
+                        controller: _cntMult,
+                        submitButtonTextStyle:
+                            GoogleFonts.alata(color: Colors.white),
+                        checkBoxProperty:
+                            CheckBoxProperty(activeColor: Color(0xff12253A)),
+                        submitButtonColor: Color(0xff12253A),
+                        listTextStyle: GoogleFonts.alata(color: Colors.black),
+                        dropDownList: current_interests,
+                        dropDownIconProperty: IconProperty(color: Colors.black),
+                        clearIconProperty: IconProperty(color: Colors.black),
+                        textFieldDecoration: InputDecoration(
                             filled: true,
                             //      fillColor: Color(0xffFDF2C9),
                             //      focusColor: Color(0xffFDF2C9),
@@ -131,6 +163,14 @@ class _ProfileState extends State<Profile> {
                             //      labelText: "Age",
                             labelStyle: GoogleFonts.alata(
                                 fontSize: 16, color: Color(0xff12253A))),
+                        validator: (value) {
+                          if (value == null) {
+                            return "Required field";
+                          } else {
+                            return null;
+                          }
+                        },
+                        onChanged: (val) {},
                       ),
                     ),
                     Padding(
@@ -142,21 +182,28 @@ class _ProfileState extends State<Profile> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        style: GoogleFonts.alata(color: Colors.black),
-                        decoration: InputDecoration(
-                            filled: true,
-                            //      fillColor: Color(0xffFDF2C9),
-                            //      focusColor: Color(0xffFDF2C9),
-                            //      hoverColor: Color(0xffFDF2C9),
-                            focusedBorder: const OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xff12253A))),
-                            //      labelText: "Age",
-                            labelStyle: GoogleFonts.alata(
-                                fontSize: 16, color: Color(0xff12253A))),
-                      ),
+                      child: DropDownTextField(
+                          initialValue: "English",
+                          textStyle: GoogleFonts.alata(),
+                          listTextStyle: GoogleFonts.alata(),
+                          dropDownIconProperty:
+                              IconProperty(color: Colors.black),
+                          clearIconProperty: IconProperty(color: Colors.black),
+                          textFieldDecoration: InputDecoration(
+                              filled: true,
+                              //      fillColor: Color(0xffFDF2C9),
+                              //      focusColor: Color(0xffFDF2C9),
+                              //      hoverColor: Color(0xffFDF2C9),
+                              focusedBorder: const OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xff12253A))),
+                              //      labelText: "Age",
+                              labelStyle: GoogleFonts.alata(
+                                  fontSize: 16, color: Color(0xff12253A))),
+                          dropDownList: const [
+                            DropDownValueModel(
+                                name: "English", value: "English")
+                          ]),
                     ),
                   ],
                 ),

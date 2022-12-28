@@ -17,6 +17,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   FirebaseAuth? _auth;
+  String name = "";
   TextEditingController phoneno = TextEditingController();
   List<DropDownValueModel> current_interests = [];
   List myChannels = [];
@@ -34,20 +35,23 @@ class _ProfileState extends State<Profile> {
     phoneno.value = TextEditingValue(text: (_auth?.currentUser?.phoneNumber)!);
     print("Getting channels");
     List channels = await getsChannels();
-    List mychannels = await getMyChannels(_auth?.currentUser?.uid);
+    Map mychannels = await getMyChannels(_auth?.currentUser?.uid);
     print(mychannels);
-
+    print(mychannels['name']);
     List<DropDownValueModel> allchannels = channels
         .map(
           (e) => DropDownValueModel(name: e, value: e),
         )
         .toList();
-    _cntMult.setDropDown(mychannels.map((e) {
+    List<DropDownValueModel>? dropdownChannels =
+        List<DropDownValueModel>.from(mychannels['interests'].map((e) {
       print(e.toString().trim());
       return DropDownValueModel(
           name: e.toString().trim(), value: e.toString().trim());
     }).toList());
+    _cntMult.setDropDown(dropdownChannels);
     setState(() {
+      name = mychannels['name'];
       current_interests = allchannels;
     });
   }
@@ -98,7 +102,7 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
               Text(
-                "Nigel Dias",
+                name,
                 style: GoogleFonts.alata(fontSize: 32),
               ),
               Padding(

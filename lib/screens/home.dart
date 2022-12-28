@@ -283,7 +283,7 @@ class _HomeState extends State<Home> {
                       IconButton(
                           onPressed: () {},
                           icon: Icon(
-                            Icons.settings,
+                            Icons.speaker,
                             size: 34,
                             color: Color(0xffFCE39A),
                           )),

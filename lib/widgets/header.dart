@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class Header extends StatelessWidget {
   final heading;
@@ -58,7 +59,7 @@ class Header extends StatelessWidget {
           ],
         ),
         Text(
-          heading,
+          heading.toString().tr(),
           style: GoogleFonts.alata(fontSize: 32),
         ),
       ],

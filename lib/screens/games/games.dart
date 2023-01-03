@@ -37,8 +37,8 @@ class _GamesState extends State<Games> {
             child: Header(
               heading: widget.url ==
                       "https://www.seniorsonline.vic.gov.au/services-information/games"
-                  ? "Games"
-                  : 'Event',
+                  ? "games"
+                  : 'events',
             ),
           ),
           Expanded(

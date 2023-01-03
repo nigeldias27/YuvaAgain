@@ -1,4 +1,5 @@
 import 'package:dropdown_textfield/dropdown_textfield.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -113,7 +114,7 @@ class _ProfileState extends State<Profile> {
                     Padding(
                       padding: const EdgeInsets.only(top: 12.0),
                       child: Text(
-                        "Phone Number",
+                        "phone_no".tr(),
                         style: GoogleFonts.alata(fontSize: 18),
                       ),
                     ),
@@ -139,7 +140,7 @@ class _ProfileState extends State<Profile> {
                     Padding(
                       padding: const EdgeInsets.only(top: 12.0),
                       child: Text(
-                        "Hobbies",
+                        "hobbies".tr(),
                         style: GoogleFonts.alata(fontSize: 18),
                       ),
                     ),
@@ -180,14 +181,26 @@ class _ProfileState extends State<Profile> {
                     Padding(
                       padding: const EdgeInsets.only(top: 12.0),
                       child: Text(
-                        "Languages",
+                        "language".tr(),
                         style: GoogleFonts.alata(fontSize: 18),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
                       child: DropDownTextField(
-                          initialValue: "English",
+                          onChanged: (value) {
+                            print(value.value);
+                            if (value.value == "English") {
+                              context.setLocale(Locale('en', 'US'));
+                            }
+                            if (value.value == "Hindi") {
+                              //  print("Hindi");
+                              context.setLocale(Locale('hi', 'IN'));
+                            }
+                          },
+                          initialValue: context.locale.languageCode == "hi"
+                              ? "Hindi"
+                              : "English",
                           textStyle: GoogleFonts.alata(),
                           listTextStyle: GoogleFonts.alata(),
                           dropDownIconProperty:
@@ -206,7 +219,8 @@ class _ProfileState extends State<Profile> {
                                   fontSize: 16, color: Color(0xff12253A))),
                           dropDownList: const [
                             DropDownValueModel(
-                                name: "English", value: "English")
+                                name: "English", value: "English"),
+                            DropDownValueModel(name: "Hindi", value: "Hindi")
                           ]),
                     ),
                   ],

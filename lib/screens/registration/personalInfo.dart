@@ -1,4 +1,5 @@
 import 'package:dropdown_textfield/dropdown_textfield.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
@@ -79,7 +80,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 focusedBorder: const OutlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Color(0xff12253A))),
-                                labelText: "Name",
+                                labelText: "name".tr(),
                                 labelStyle: GoogleFonts.alata(
                                     fontSize: 16, color: Color(0xff12253A))),
                           ),
@@ -104,7 +105,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 focusedBorder: const OutlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Color(0xff12253A))),
-                                labelText: "Age",
+                                labelText: "age".tr(),
                                 labelStyle: GoogleFonts.alata(
                                     fontSize: 16, color: Color(0xff12253A))),
                           ),
@@ -133,7 +134,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 focusedBorder: const OutlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Color(0xff12253A))),
-                                labelText: "Gender",
+                                labelText: "gender".tr(),
                                 labelStyle: GoogleFonts.alata(
                                     fontSize: 16, color: Color(0xff12253A))),
                             validator: (value) {
@@ -195,7 +196,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Text(
-                            'Submit',
+                            'submit'.tr(),
                             textAlign: TextAlign.center,
                             style: GoogleFonts.alata(
                                 color: Colors.white, fontSize: 24),

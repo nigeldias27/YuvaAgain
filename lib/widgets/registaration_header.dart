@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -47,7 +48,9 @@ class RegistrationHeader extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 16.0),
           child: Text(
-            headingText == null ? "Yuva Again" : "Hello " + headingText,
+            headingText == null
+                ? "app_name".tr()
+                : "greeting".tr() + headingText,
             style: GoogleFonts.alata(color: Color(0xff2A1F00), fontSize: 30),
           ),
         )

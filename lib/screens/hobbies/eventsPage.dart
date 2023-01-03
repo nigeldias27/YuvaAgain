@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -55,7 +56,7 @@ class _EventsPageState extends State<EventsPage> {
       body: Column(
         children: [
           Header(
-            heading: "Events",
+            heading: "events",
           ),
           Container(
             child: Padding(
@@ -84,7 +85,7 @@ class _EventsPageState extends State<EventsPage> {
                           hoverColor: Color(0xffFDF2C9),
                           focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(color: Color(0xff12253A))),
-                          labelText: "Search",
+                          labelText: "search".tr(),
                           labelStyle: GoogleFonts.alata(
                               fontSize: 16, color: Color(0xff12253A))),
                     ),

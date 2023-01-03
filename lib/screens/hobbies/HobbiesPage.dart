@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,7 +23,7 @@ class HobbyTracker extends StatefulWidget {
 class _HobbyTrackerState extends State<HobbyTracker> {
   final nameController = TextEditingController();
   FirebaseAuth? auth;
-  List categories = ['Events', 'Voice Channels', 'Reminder'];
+  List categories = ['events', 'voice_channel', 'reminder'];
   bool notified = true;
   int selectedCategory = -1;
   int categoryIndex = 0;
@@ -138,7 +139,8 @@ class _HobbyTrackerState extends State<HobbyTracker> {
                                                                 24,
                                                                 12),
                                                         child: Text(
-                                                          'Create a Reminder',
+                                                          'create_a_reminder'
+                                                              .tr(),
                                                           style:
                                                               GoogleFonts.alata(
                                                                   fontSize: 18),
@@ -169,7 +171,8 @@ class _HobbyTrackerState extends State<HobbyTracker> {
                                                                       color: Color(
                                                                           0xff3F38DD))),
                                                               labelText:
-                                                                  "Name of the Reminder",
+                                                                  "name_of_the_reminder"
+                                                                      .tr(),
                                                               labelStyle:
                                                                   GoogleFonts.alata(
                                                                       fontSize:
@@ -184,6 +187,8 @@ class _HobbyTrackerState extends State<HobbyTracker> {
                                                               DateTime.now();
                                                           final pickDate =
                                                               await showDatePicker(
+                                                                  locale: context
+                                                                      .locale,
                                                                   context:
                                                                       context,
                                                                   initialDate:
@@ -372,14 +377,16 @@ class _HobbyTrackerState extends State<HobbyTracker> {
                                                                           .start,
                                                                   children: [
                                                                     Text(
-                                                                      "Category",
+                                                                      "category"
+                                                                          .tr(),
                                                                       style: GoogleFonts.alata(
                                                                           fontSize:
                                                                               14),
                                                                     ),
                                                                     Text(
-                                                                        categories[
-                                                                            categoryIndex],
+                                                                        categories[categoryIndex]
+                                                                            .toString()
+                                                                            .tr(),
                                                                         style: GoogleFonts.alata(
                                                                             color:
                                                                                 Color(0xff767676),
@@ -444,15 +451,18 @@ class _HobbyTrackerState extends State<HobbyTracker> {
                                                                           .start,
                                                                   children: [
                                                                     Text(
-                                                                      "Get Notified",
+                                                                      "get_notified"
+                                                                          .tr(),
                                                                       style: GoogleFonts.alata(
                                                                           fontSize:
                                                                               14),
                                                                     ),
                                                                     Text(
                                                                         notified
-                                                                            ? "Yes"
-                                                                            : 'No',
+                                                                            ? "yes"
+                                                                                .tr()
+                                                                            : 'no'
+                                                                                .tr(),
                                                                         style: GoogleFonts.alata(
                                                                             color:
                                                                                 Color(0xff767676),
@@ -511,7 +521,7 @@ class _HobbyTrackerState extends State<HobbyTracker> {
                                                                   const EdgeInsets
                                                                       .all(8.0),
                                                               child: Text(
-                                                                "ADD",
+                                                                "add".tr(),
                                                                 textAlign:
                                                                     TextAlign
                                                                         .center,
@@ -539,7 +549,7 @@ class _HobbyTrackerState extends State<HobbyTracker> {
                 ],
               ),
               Text(
-                "Hobby Tracker",
+                "hobby_tracker".tr(),
                 style: GoogleFonts.alata(fontSize: 32),
               ),
             ],
@@ -584,14 +594,14 @@ class _HobbyTrackerState extends State<HobbyTracker> {
                 activeDayColor: Colors.white,
                 activeBackgroundDayColor: Color(0xff00B6AA),
                 dotsColor: Colors.white,
-                locale: 'en_ISO',
+                locale: context.locale.languageCode,
               );
             },
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16.0, 16, 0, 16),
             child: Text(
-              "My Tasks",
+              "my_tasks".tr(),
               style: GoogleFonts.alata(fontSize: 32),
             ),
           ),
@@ -624,7 +634,7 @@ class _HobbyTrackerState extends State<HobbyTracker> {
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Text(
-                                categories[index],
+                                categories[index].toString().tr(),
                                 style: GoogleFonts.alata(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),

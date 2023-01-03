@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuva_again/screens/hobbies/HobbiesPage.dart';
@@ -20,7 +21,7 @@ class _MenuChoiceState extends State<MenuChoice> {
         backgroundColor: Color(0xffFEFCF3),
         body: Column(
           children: [
-            Header(heading: "Events and Hobbies"),
+            Header(heading: "hobbies_and_events"),
             Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 32, horizontal: 32.0),
@@ -45,7 +46,7 @@ class _MenuChoiceState extends State<MenuChoice> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 16),
                         child: Text(
-                          "Events",
+                          "events".tr(),
                           style: GoogleFonts.alata(fontSize: 30),
                         ),
                       )
@@ -77,7 +78,7 @@ class _MenuChoiceState extends State<MenuChoice> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 16),
                         child: Text(
-                          "Hobbies",
+                          "hobbies".tr(),
                           style: GoogleFonts.alata(fontSize: 30),
                         ),
                       )

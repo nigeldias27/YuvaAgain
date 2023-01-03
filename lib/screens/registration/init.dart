@@ -1,4 +1,5 @@
 import 'package:dropdown_textfield/dropdown_textfield.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
@@ -95,7 +96,7 @@ class _InitializerWidgetState extends State<InitializerWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Choose your Language",
+                          "choose_language".tr(),
                           style: GoogleFonts.alata(
                             fontSize: 26,
                           ),
@@ -104,6 +105,16 @@ class _InitializerWidgetState extends State<InitializerWidget> {
                         Padding(
                           padding: const EdgeInsets.only(top: 32.0),
                           child: DropDownTextField(
+                              onChanged: (value) {
+                                print(value.value);
+                                if (value.value == "English") {
+                                  context.setLocale(Locale('en', 'US'));
+                                }
+                                if (value.value == "Hindi") {
+                                  //  print("Hindi");
+                                  context.setLocale(Locale('hi', 'IN'));
+                                }
+                              },
                               textStyle: GoogleFonts.alata(),
                               listTextStyle: GoogleFonts.alata(),
                               dropDownIconProperty:
@@ -123,7 +134,9 @@ class _InitializerWidgetState extends State<InitializerWidget> {
                                       fontSize: 16, color: Colors.black)),
                               dropDownList: const [
                                 DropDownValueModel(
-                                    name: "English", value: "English")
+                                    name: "English", value: "English"),
+                                DropDownValueModel(
+                                    name: "Hindi", value: "Hindi")
                               ]),
                         ),
                         Padding(
@@ -157,7 +170,7 @@ class _InitializerWidgetState extends State<InitializerWidget> {
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 8.0),
                                   child: Text(
-                                    'Login',
+                                    'login'.tr(),
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.alata(
                                         color: Colors.white, fontSize: 24),

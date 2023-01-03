@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
@@ -152,7 +153,7 @@ class _HomeState extends State<Home> {
                                     width: 30,
                                   ),
                                   Text(
-                                    'Voice Channels',
+                                    'voice_channel'.tr(),
                                     style: GoogleFonts.alata(
                                         color: Colors.black, fontSize: 18),
                                   ),
@@ -188,7 +189,7 @@ class _HomeState extends State<Home> {
                                     width: 20,
                                   ),
                                   Text(
-                                    'Hobbies',
+                                    'hobbies'.tr(),
                                     style: GoogleFonts.alata(
                                         color: Colors.black, fontSize: 18),
                                   ),
@@ -227,7 +228,7 @@ class _HomeState extends State<Home> {
                                     width: 20,
                                   ),
                                   Text(
-                                    'Games',
+                                    'games'.tr(),
                                     style: GoogleFonts.alata(
                                         color: Colors.black, fontSize: 18),
                                   ),

@@ -1,4 +1,5 @@
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +98,7 @@ class _AuthenticateState extends State<Authenticate> {
                         hoverColor: Color(0xffFDF2C9),
                         focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(color: Color(0xff12253A))),
-                        labelText: "Enter your phone number",
+                        labelText: "enter_phone_no".tr(),
                         labelStyle: GoogleFonts.alata(
                             fontSize: 16, color: Color(0xff12253A))),
                     validator: (val) {
@@ -184,7 +185,7 @@ class _AuthenticateState extends State<Authenticate> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
-                      'Get OTP',
+                      'get_OTP'.tr(),
                       textAlign: TextAlign.center,
                       style:
                           GoogleFonts.alata(color: Colors.white, fontSize: 24),
@@ -263,7 +264,7 @@ class _AuthenticateState extends State<Authenticate> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
-                      'Verify',
+                      'verify'.tr(),
                       textAlign: TextAlign.center,
                       style:
                           GoogleFonts.alata(color: Colors.white, fontSize: 24),

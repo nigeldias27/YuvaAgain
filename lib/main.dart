@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yuva_again/screens/registration/init.dart';
@@ -18,7 +19,15 @@ Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(RemindersAdapter());
   await Hive.openBox<Reminders>('reminders');
-  runApp(const MyApp());
+  await EasyLocalization.ensureInitialized();
+  runApp(
+    EasyLocalization(
+        supportedLocales: [Locale('en', 'US'), Locale('hi', 'IN')],
+        path:
+            'assets/translations', // <-- change the path of the translation files
+        fallbackLocale: Locale('en', 'US'),
+        child: MyApp()),
+  );
   AwesomeNotifications().initialize(null, [
     NotificationChannel(
         channelKey: 'Yuva Again',
@@ -34,6 +43,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        locale: context.locale,
+        supportedLocales: context.supportedLocales,
+        localizationsDelegates: context.localizationDelegates,
         title: 'Flutter Demo',
         theme: ThemeData(
           // This is the theme of your application.
@@ -107,7 +119,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
                 child: Text(
-                  "Yuva Again",
+                  "app_name".tr(),
                   style:
                       GoogleFonts.alata(color: Color(0xff12253A), fontSize: 30),
                 ),

@@ -40,7 +40,7 @@ class _NotificationsState extends State<Notifications> {
         body: Column(
           children: [
             Header(
-              heading: "Notifications",
+              heading: "notifications",
             ),
             Expanded(
               child: ValueListenableBuilder(

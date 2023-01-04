@@ -716,7 +716,7 @@ class _HobbyTrackerState extends State<HobbyTracker> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              reminder.category,
+                              reminder.category.tr(),
                               style: GoogleFonts.alata(color: _color),
                             ),
                             Padding(
